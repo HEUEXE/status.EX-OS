@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>X-XX-XXX</title>
+  <style>
+    #countdown {
+      font-size: 13px;
+      color: #999999;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#111111; font-family: Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#111111; color:#ffffff; max-width:600px; margin:auto; border-radius:8px;">
+    <tr>
+      <td align="center" style="padding: 20px;">
+
+        <!-- Logo -->
+        <a href="#" target="_blank">
+          <img src="logo.png" alt="Logo" width="60" style="margin-bottom: 10px;">
+        </a>
+
+        <!-- Motto -->
+        <div style="font-size: 14px; letter-spacing: 1px; margin-bottom: 10px;">
+          EXECUTE IN SILENCE — STRIKE WITH LOGIC
+        </div>
+
+        <!-- Instruction Message -->
+        <div style="font-size: 13px; color: #bbbbbb; background-color: #1a1a1a; padding: 15px; border: 1px solid #333333; border-radius: 6px;">
+          You were chosen for this task.
+
+          <!-- Divider -->
+          <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 15px auto;">
+
+          <!-- Centered Task Section -->
+          <div align="center" style="max-width: 90%; margin: auto;">
+            <strong>TASK:</strong><br>
+            - Print the document.<br>
+            - Place it inside the envelope/folder.<br>
+            - Leave it at the designated location.<br><br>
+
+            <strong>LOCATION:</strong><br>
+            - Under the tree near the school gate.<br><br>
+
+            <strong>DEADLINE:</strong><br>
+            - Before 6:40 PM, August 12, 2025.<br>
+            <div id="countdown">Loading...</div><br>
+
+            <strong>OBJECTIVES:</strong><br>
+            - Fulfill the directive with precision.<br>
+            - Avoid unnecessary attention.<br><br>
+
+            <strong>Directive:</strong><br>
+            Act accordingly without hesitation. Confirm execution upon completion.
+          </div>
+
+          <!-- Divider -->
+          <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
+
+          <!-- Task Info -->
+          <table width="100%" style="font-size: 12px; color: #4f1418;">
+            <tr>
+              <td align="left">Task ID: X-S1-001</td>
+              <td align="right">Date issued: 8/12/25</td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center" style="padding-top: 5px; color: #777777;">
+                Contact: Anonymous
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Countdown Script --><script>
+  const countdownTarget = new Date("August 12, 2025 18:40:00").getTime();
+
+  const countdown = setInterval(() => {
+    const now = new Date().getTime();
+    const timeLeft = countdownTarget - now;
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      document.title = "Task Expired";
+      document.getElementById("countdown").innerHTML = "Task Expired";
+      return;
+    }
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    const countdownText = ` ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    // Update both page title and visible timer
+    document.title = countdownText;
+    document.getElementById("countdown").innerHTML = ` Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
+</script>
+  
+</body>
+</html>
