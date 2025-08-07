@@ -76,32 +76,40 @@
     </tr>
   </table>
 
-  <!-- Countdown Script --><script>
-  const countdownTarget = new Date("August 12, 2025 18:40:00").getTime();
+  <!-- Countdown Script -->
+  <script>
+const countdownTarget = new Date("August 8, 2025 1:15:00").getTime();
 
-  const countdown = setInterval(() => {
-    const now = new Date().getTime();
-    const timeLeft = countdownTarget - now;
+const countdown = setInterval(() => {
+  const now = new Date().getTime();
+  const timeLeft = countdownTarget - now;
 
-    if (timeLeft <= 0) {
-      clearInterval(countdown);
-      document.title = "Task Expired";
-      document.getElementById("countdown").innerHTML = "Task Expired";
-      return;
-    }
+  if (timeLeft <= 0) {
+    clearInterval(countdown);
 
-    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    // Overwrite entire page with destruction notice
+    document.body.innerHTML = `
+      <div style="color:red; background-color:#000; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:Arial, sans-serif;">
+        <h1 style="font-size: 36px;">FILE DESTROYED</h1>
+        <p style="color: #aaa; font-size: 14px;">This mission file is no longer accessible.</p>
+      </div>
+    `;
+    document.title = "FILE DESTROYED";
+    return;
+  }
 
-    const countdownText = ` ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    // Update both page title and visible timer
-    document.title = countdownText;
-    document.getElementById("countdown").innerHTML = ` Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }, 1000);
-</script>
+  const countdownText = ` ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+  // Update both page title and visible timer
+  document.title = countdownText;
+  document.getElementById("countdown").innerHTML = ` Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+  </script>
   
 </body>
 </html>
