@@ -1,115 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>X-XX-XXX</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
   <style>
-    #countdown {
+    :root {
+      --f-size: 15;
+      --f-unit: 1vmin;
+      --f: calc(var(--f-size) * var(--f-unit));
+      --bg: #111;
+    }
+
+    *, *::after, *::before {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .confess-box {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      border-radius: 6px;
       font-size: 13px;
-      color: #999999;
-      margin-top: 5px;
+      color: #bbb;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .confess-box a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .confess-box a:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
+    .floating-text {
+      position: absolute;
+      font-size: 16px;
+      color: #444;
+      opacity: 0;
+      animation: floatText 5s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatText {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+      50% {
+        opacity: 0.6;
+        transform: translate(30px, -30px) rotate(20deg) scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50px, 50px) rotate(-30deg) scale(0.5);
+      }
+    }
+
+    .typewriter-line {
+      opacity: 0;
+      white-space: pre;
+    }
+
+    .visible {
+      opacity: 1;
     }
   </style>
 </head>
-<body style="margin:0; padding:0; background-color:#111111; font-family: Arial, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#111111; color:#ffffff; max-width:600px; margin:auto; border-radius:8px;">
-    <tr>
-      <td align="center" style="padding: 20px;">
-
-        <!-- Logo -->
-        <a href="#" target="_blank">
-          <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" width="60" style="margin-bottom: 10px;">
-        </a>
-
-        <!-- Motto -->
-        <div style="font-size: 14px; letter-spacing: 1px; margin-bottom: 10px;">
-          EXECUTE IN SILENCE — STRIKE WITH LOGIC
-        </div>
-
-        <!-- Instruction Message -->
-        <div style="font-size: 13px; color: #bbbbbb; background-color: #1a1a1a; padding: 15px; border: 1px solid #333333; border-radius: 6px;">
-          You were chosen for this task.
-
-          <!-- Divider -->
-          <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 15px auto;">
-
-          <!-- Centered Task Section -->
-          <div align="center" style="max-width: 90%; margin: auto;">
-            <strong>TASK:</strong><br>
-            - Print the document.<br>
-            - Place it inside the envelope/folder.<br>
-            - Leave it at the designated location.<br><br>
-
-            <strong>LOCATION:</strong><br>
-            - Under the tree near the school gate.<br><br>
-
-            <strong>DEADLINE:</strong><br>
-            - Before 6:40 PM, August 12, 2025.<br>
-            <div id="countdown">Loading...</div><br>
-
-            <strong>OBJECTIVES:</strong><br>
-            - Fulfill the directive with precision.<br>
-            - Avoid unnecessary attention.<br><br>
-
-            <strong>Directive:</strong><br>
-            Act accordingly without hesitation. Confirm execution upon completion.
-          </div>
-
-          <!-- Divider -->
-          <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
-
-          <!-- Task Info -->
-          <table width="100%" style="font-size: 12px; color: #4f1418;">
-            <tr>
-              <td align="left">Task ID: X-S1-001</td>
-              <td align="right">Date issued: 8/12/25</td>
-            </tr>
-            <tr>
-              <td colspan="2" align="center" style="padding-top: 5px; color: #777777;">
-                Contact: Anonymous
-              </td>
-            </tr>
-          </table>
-
-        </div>
-      </td>
-    </tr>
-  </table>
-
-  <!-- Countdown Script -->
-  <script>
-const countdownTarget = new Date("August 12, 2025 18:40:00").getTime();
-
-const countdown = setInterval(() => {
-  const now = new Date().getTime();
-  const timeLeft = countdownTarget - now;
-
-  if (timeLeft <= 0) {
-    clearInterval(countdown);
-
-    // Overwrite entire page with destruction notice
-    document.body.innerHTML = `
-      <div style="color:red; background-color:#000; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:Arial, sans-serif;">
-        <h1 style="font-size: 36px;">FILE DESTROYED</h1>
-        <p style="color: #aaa; font-size: 14px;">This mission file is no longer accessible.</p>
+<body>
+  <div class="container">
+    <div class="confess-box">
+      <a href="#" target="_blank">
+        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" width="60" style="margin-bottom: 10px;">
+      </a>
+      <div style="font-size: 14px; letter-spacing: 1px; margin-bottom: 10px; color: #666;">
+        EXECUTE IN SILENCE — STRIKE WITH LOGIC
       </div>
-    `;
-    document.title = "FILE DESTROYED";
-    return;
-  }
+      <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
 
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      <div id="typewriter">
+        <!-- The typewriter content will be injected here -->
+      </div>
 
-  const countdownText = ` ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
 
-  // Update both page title and visible timer
-  document.title = countdownText;
-  document.getElementById("countdown").innerHTML = ` Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-}, 1000);
+      <table width="100%" style="font-size: 12px; color: #661319;">
+        <tr>
+          <td align="left">Task ID: X-S1-001</td>
+          <td align="right">Date issued: 8/12/25</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center" style="padding-top: 5px; color: #777777;">
+            WE ARE EVERYWHERE - THE WATCHER
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const lines = [
+      "<strong>CONFESSION:</strong>",
+      "Confess everything you've done.",
+      "I know it all — every detail.",
+      "How pathetic...",
+      "paying someone just to get high marks in ETech?",
+      "<br>",
+      "<strong>TASK:</strong>",
+      "Fill the file and confess.", 
+      '<a href="https://docs.google.com/forms/d/e/1FAIpQLSccJU9BqC9-vee3IZWYWOETWeKRTv78o21-QKUygkO7z-S80A/viewform">Access link</a>',
+      "<br>",
+      "<strong>DEADLINE:</strong>",
+      "Before 1:00 PM, August 12, 2025.",
+      '<div id="countdown">Loading...</div>',
+      "<br>",
+      "<strong>Directive:</strong>",
+      "Act accordingly without hesitation. Confirm execution upon completion."
+    ];
+
+    const typewriterContainer = document.getElementById("typewriter");
+
+    function typeLines(lines, delay = 600) {
+      let i = 0;
+      function showLine() {
+        if (i < lines.length) {
+          const line = document.createElement("div");
+          line.className = "typewriter-line visible";
+          line.innerHTML = lines[i];
+          typewriterContainer.appendChild(line);
+          i++;
+          setTimeout(showLine, 80); // Delay between lines
+        }
+      }
+      showLine();
+    }
+
+    typeLines(lines);
+
+    // Countdown Timer
+    const countdownTarget = new Date("August 12, 2025 13:00:00").getTime();
+    const countdown = setInterval(() => {
+      const now = new Date().getTime();
+      const timeLeft = countdownTarget - now;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        document.body.innerHTML = `
+          <div style="color:red; background-color:#000; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:'Share Tech Mono', monospace;">
+            <h1 style="font-size: 36px;">FILE DESTROYED</h1>
+            <p style="color: #aaa; font-size: 14px;">This mission file is no longer accessible.</p>
+          </div>
+        `;
+        document.title = "FILE DESTROYED";
+        return;
+      }
+
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      const countdownEl = document.getElementById("countdown");
+      if (countdownEl) {
+        countdownEl.innerHTML = `Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+      document.title = ` ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
   </script>
-  
 </body>
 </html>
