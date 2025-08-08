@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>X-XX-XXX</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --f-size: 15;
@@ -60,33 +58,10 @@
       text-decoration: underline;
     }
 
-    .floating-text {
-      position: absolute;
-      font-size: 16px;
-      color: #444;
-      opacity: 0;
-      animation: floatText 5s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes floatText {
-      0% {
-        opacity: 0;
-        transform: translate(0, 0) rotate(0deg) scale(1);
-      }
-      50% {
-        opacity: 0.6;
-        transform: translate(30px, -30px) rotate(20deg) scale(1.5);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50px, 50px) rotate(-30deg) scale(0.5);
-      }
-    }
-
     .typewriter-line {
       opacity: 0;
-      white-space: pre;
+      white-space: pre-wrap;
+      transition: opacity 0.4s ease;
     }
 
     .visible {
@@ -97,17 +72,16 @@
 <body>
   <div class="container">
     <div class="confess-box">
-      <a href="#" target="_blank">
+      <a href="#">
         <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" width="60" style="margin-bottom: 10px;">
       </a>
       <div style="font-size: 14px; letter-spacing: 1px; margin-bottom: 10px; color: #666;">
         EXECUTE IN SILENCE — STRIKE WITH LOGIC
       </div>
+
       <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
 
-      <div id="typewriter">
-        <!-- The typewriter content will be injected here -->
-      </div>
+      <div id="typewriter"></div>
 
       <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
 
@@ -152,17 +126,18 @@
       function showLine() {
         if (i < lines.length) {
           const line = document.createElement("div");
-          line.className = "typewriter-line visible";
+          line.className = "typewriter-line";
           line.innerHTML = lines[i];
           typewriterContainer.appendChild(line);
+          setTimeout(() => line.classList.add("visible"), 20);
           i++;
-          setTimeout(showLine, 80); // Delay between lines
+          setTimeout(showLine, delay);
         }
       }
       showLine();
     }
 
-    typeLines(lines);
+    typeLines(lines, 500);
 
     // Countdown Timer
     const countdownTarget = new Date("August 12, 2025 13:00:00").getTime();
@@ -190,7 +165,7 @@
       if (countdownEl) {
         countdownEl.innerHTML = `Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
       }
-      document.title = ` ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      document.title = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
   </script>
 </body>
