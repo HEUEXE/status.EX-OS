@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>X-XX-XXX</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
     :root {
       --f-size: 15;
@@ -23,6 +23,10 @@
       color: #fff;
       font-family: 'Share Tech Mono', monospace;
       overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .container {
@@ -46,6 +50,11 @@
       color: #bbb;
       text-align: center;
       z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 220px;
+      user-select: none;
     }
 
     .confess-box a {
@@ -58,14 +67,63 @@
       text-decoration: underline;
     }
 
-    .typewriter-line {
-      opacity: 0;
-      white-space: pre-wrap;
-      transition: opacity 0.4s ease;
+    .confess-box img {
+      margin-bottom: 10px;
     }
 
-    .visible {
-      opacity: 1;
+    .confess-box .motto {
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #333333;
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    #buttons {
+      display: none;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    button {
+      background-color: #222;
+      border: 1px solid #555;
+      color: #fff;
+      padding: 10px 25px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+    }
+
+    button:hover {
+      background-color: #555;
+      color: #f33;
+    }
+
+    table {
+      font-size: 12px;
+      color: #661319;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    table td {
+      padding: 0 5px;
+    }
+
+    .footer-note {
+      padding-top: 5px;
+      color: #777777;
+      text-align: center;
     }
   </style>
 </head>
@@ -73,25 +131,32 @@
   <div class="container">
     <div class="confess-box">
       <a href="#">
-        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" width="60" style="margin-bottom: 10px;">
+        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" width="60" />
       </a>
-      <div style="font-size: 14px; letter-spacing: 1px; margin-bottom: 10px; color: #666;">
+      <div class="motto">
         EXECUTE IN SILENCE — STRIKE WITH LOGIC
       </div>
 
-      <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
+      <div id="countdown" style="margin-top: 5px; font-size: 14px; color: #aaa;"></div>
+
+
+      <hr />
 
       <div id="typewriter"></div>
 
-      <hr style="border: none; border-top: 1px solid #333333; width: 80%; margin: 20px auto;">
+      <div id="buttons">
+        <button id="proceedBtn">PROCEED</button>
+      </div>
 
-      <table width="100%" style="font-size: 12px; color: #661319;">
+      <hr />
+
+      <table>
         <tr>
           <td align="left">Task ID: X-S1-001</td>
           <td align="right">Date issued: 8/12/25</td>
         </tr>
         <tr>
-          <td colspan="2" align="center" style="padding-top: 5px; color: #777777;">
+          <td colspan="2" class="footer-note">
             WE ARE EVERYWHERE - THE WATCHER
           </td>
         </tr>
@@ -100,44 +165,63 @@
   </div>
 
   <script>
-    const lines = [
-      "<strong>CONFESSION:</strong>",
-      "Confess everything you've done.",
-      "I know it all — every detail.",
-      "How pathetic...",
-      "paying someone just to get high marks in ETech?",
-      "<br>",
-      "<strong>TASK:</strong>",
-      "Fill the file and confess.", 
-      '<a href="https://docs.google.com/forms/d/e/1FAIpQLSccJU9BqC9-vee3IZWYWOETWeKRTv78o21-QKUygkO7z-S80A/viewform">Access link</a>',
-      "<br>",
-      "<strong>DEADLINE:</strong>",
-      "Before 1:00 PM, August 12, 2025.",
-      '<div id="countdown">Loading...</div>',
-      "<br>",
-      "<strong>Directive:</strong>",
-      "Act accordingly without hesitation. Confirm execution upon completion."
+    const messages = [
+      "WE ARE RECRUITING YOU",
+      "WE ALREADY KNOW WHO YOU ARE",
+      "YOUR EVERY MOVE HAS BEEN TRACKED",
+      "YOUR INFORMATION IS IN OUR FILES",
+      "JOIN OR FACE THE CONSEQUENCES",
+      "LOYALTY IS YOUR ONLY CHOICE",
+      "THE WATCHER SEES EVERYTHING",
+      "MIGUEL RUBIO",
+      "MALE",
+      "JULY 25, 2008",
+      "miguel.rubio1125@gmail.com",
+      "09929917154",
+      "BLK 25, SITIO RUBY, FAIRVIEW, QUEZON CITY",
+      "YOUR CHOICES WILL DECIDE YOUR FATE"
     ];
 
-    const typewriterContainer = document.getElementById("typewriter");
 
-    function typeLines(lines, delay = 600) {
+    const typewriterEl = document.getElementById("typewriter");
+    const buttonsEl = document.getElementById("buttons");
+    const typingSpeed = 100; // ms per character
+    const pauseBetweenMessages = 1000; // ms pause after full message
+
+    let currentMessageIndex = 0;
+
+    function typeMessage(msg, callback) {
       let i = 0;
-      function showLine() {
-        if (i < lines.length) {
-          const line = document.createElement("div");
-          line.className = "typewriter-line";
-          line.innerHTML = lines[i];
-          typewriterContainer.appendChild(line);
-          setTimeout(() => line.classList.add("visible"), 20);
+      typewriterEl.textContent = "";
+      typewriterEl.style.borderRight = "2px solid #bbb";
+
+      function typeChar() {
+        if (i < msg.length) {
+          typewriterEl.textContent += msg.charAt(i);
           i++;
-          setTimeout(showLine, delay);
+          setTimeout(typeChar, typingSpeed);
+        } else {
+          setTimeout(callback, pauseBetweenMessages);
         }
       }
-      showLine();
+
+      typeChar();
     }
 
-    typeLines(lines, 500);
+    function showNextMessage() {
+      if (currentMessageIndex < messages.length) {
+        typeMessage(messages[currentMessageIndex], () => {
+          currentMessageIndex++;
+          showNextMessage();
+        });
+      } else {
+        // After last message, remove cursor and show buttons
+        typewriterEl.style.borderRight = "none";
+        buttonsEl.style.display = "flex";
+      }
+    }
+
+    showNextMessage();
 
     // Countdown Timer
     const countdownTarget = new Date("August 12, 2025 13:00:00").getTime();
@@ -167,6 +251,10 @@
       }
       document.title = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
+
+    document.getElementById("proceedBtn").addEventListener("click", () => {
+      window.location.href = "https://forms.gle/h4eY8RbAsacZuV3Y7";
+    });
   </script>
 </body>
 </html>
