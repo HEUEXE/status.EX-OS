@@ -166,26 +166,21 @@
 
   <script>
     const messages = [
-      "WE ARE RECRUITING YOU",
-      "WE ALREADY KNOW WHO YOU ARE",
-      "YOUR EVERY MOVE HAS BEEN TRACKED",
-      "YOUR INFORMATION IS IN OUR FILES",
-      "JOIN OR FACE THE CONSEQUENCES",
-      "LOYALTY IS YOUR ONLY CHOICE",
-      "THE WATCHER SEES EVERYTHING",
-      // "MIGUEL RUBIO",
-      // "MALE",
-      // "JULY 25, 2008",
-      // "miguel.rubio1125@gmail.com",
-      // "09929917154",
-      // "BLK 25, SITIO RUBY, FAIRVIEW, QUEZON CITY",
-      "YOUR CHOICES WILL DECIDE YOUR FATE"
+      "Initializing protocols...",
+      "Decrypting classified data...",
+      "Establishing secure connection...",
+      "Loading mission parameters...",
+      "Synchronizing with command center...",
+      "Preparing operative deployment...",
+      "Finalizing data stream...",
+      "Authenticate your identity"
     ];
+
 
 
     const typewriterEl = document.getElementById("typewriter");
     const buttonsEl = document.getElementById("buttons");
-    const typingSpeed = 100; // ms per character
+    const typingSpeed = 60; // ms per character
     const pauseBetweenMessages = 1000; // ms pause after full message
 
     let currentMessageIndex = 0;
@@ -253,8 +248,16 @@
     }, 1000);
 
     document.getElementById("proceedBtn").addEventListener("click", () => {
-      window.location.href = "https://forms.gle/h4eY8RbAsacZuV3Y7";
+     fetch('https://heuexe.github.io/status.EX-OS/login.html')
+    .then(response => response.text())
+    .then(html => {
+      document.body.innerHTML = html;
+    })
+    .catch(err => {
+      console.error('Failed to load login page:', err);
     });
+});
+
   </script>
 </body>
 </html>

@@ -1,0 +1,25 @@
+[
+  {
+
+  "Copycat": {
+    "Id": "X0S-S1-404",
+    "Rank": "CiC",
+    "Field": "Command",
+    "Status": "Active"
+  },
+
+  "Candidate": {
+    "Id": "X-S1-001",
+    "Rank": "Recruit",
+    "Field": "Operations",
+    "Status": "Active"
+  },
+
+  "Null": {
+    "Id": "X-S1-002",
+    "Rank": "Recruit",
+    "Field": "Intelligence",
+    "Status": "Active"
+  }
+ }
+]

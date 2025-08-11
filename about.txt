@@ -1,0 +1,26 @@
+
+
+Clearance Level - Ranks - Clearance Info
+Level 1: Recruit — Basic clearance
+Level 2: Operative — Low-level field clearance
+Level 3: Specialist — Mid-level technical clearance
+Level 4: Agent — Standard operational clearance
+Level 5: Senior Agent — Advanced operational clearance
+Level 6: Field Commander — Tactical clearance
+Level 7: Tactical Officer — Strategic clearance
+Level 8: Intelligence Officer — Confidential clearance
+Level 9: Deputy Director — Secret clearance
+Level 10: Director — Top secret clearance
+Level 11: Commander-in-Chief — Ultra top secret clearance
+
+Fields - Field Information
+Operations — Handles missions and field activities
+Intelligence — Gathers and analyzes data
+Technical — Manages tech, hacking, and cyber ops
+Reconnaissance — Scouts and collects info on targets
+Security — Protects assets and personnel
+Communications — Handles info flow and coordination
+Logistics — Manages supplies and resources
+Training — Prepares agents and specialists
+Research & Development — Innovates new tech and tactics
+Command — Leadership and strategic planning
