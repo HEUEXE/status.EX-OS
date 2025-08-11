@@ -2,12 +2,14 @@
   "Copycat": {
     "Id": "XSI-JFK-NPQ",
     "Status": "Active",
+    "Date Issued": 08/11/2025",
     "Mission": ["Extraction"],
-    "Description": "Connecting to a target's smartphone to extract call data, text messages, stored files (like photos, documents), app data, and location history to understand their activities and contacts."
+    "Description": "Connect to a target's smartphone to extract call data, text messages, stored files (like photos, documents), app data, and location history to understand their activities and contacts."
   },
   "Null": {
     "Id": "HWN-ZDC-JQG",
     "Status": "Active",
+    "Date Issued": 08/11/2025",
     "Mission": ["Secure Parameter"],
     "Description": "Patrol the agency"
   }
