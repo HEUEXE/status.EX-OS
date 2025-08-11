@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EX-OS Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #111;
+      --text-light: #bbb;
+      --text-muted: #666;
+      --error-color: #f33;
+      --success-color: #0f0;
+      --primary-color: #222;
+      --hover-color: #555;
+      --hover-text-color: #f33;
+      --border-color: #333;
+      --font-family: 'Share Tech Mono', monospace;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      height: 100vh;
+      background-color: var(--bg);
+      color: #fff;
+      font-family: var(--font-family);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    body > iframe {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .container-box {
+      background-color: #1a1a1a;
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-light);
+      text-align: center;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 220px;
+      user-select: none;
+    }
+    .container-box a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .container-box a:hover {
+      color: red;
+      text-decoration: underline;
+    }
+    .container-box img {
+      margin-bottom: 15px;
+      width: 60px;
+      user-select: none;
+    }
+    .motto {
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      color: var(--text-muted);
+      user-select: text;
+    }
+    form {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 12px 0;
+      border-radius: 4px;
+      border: 1px solid #444;
+      background-color: var(--primary-color);
+      color: #eee;
+      font-family: var(--font-family);
+      font-size: 14px;
+      user-select: text;
+    }
+    input::placeholder {
+      color: var(--text-muted);
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary-color);
+      border: 1px solid #555;
+      color: #fff;
+      font-family: var(--font-family);
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+    }
+    button:hover {
+      background-color: var(--hover-color);
+      color: var(--hover-text-color);
+    }
+    .error {
+      color: var(--error-color);
+      margin-top: 12px;
+      font-size: 13px;
+      min-height: 18px;
+    }
+    table {
+      font-size: 12px;
+      color: #661319;
+      width: 100%;
+      margin-top: auto;
+      user-select: none;
+    }
+    table td {
+      padding: 0 5px;
+    }
+    .footer-note {
+      padding-top: 5px;
+      color: #777;
+      text-align: center;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="container-box">
+      <a href="#">
+        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
+      </a>
+      <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
+
+      <form id="loginForm" autocomplete="off" novalidate>
+        <input type="text" id="codename" name="codename" placeholder="Enter Codename" required autofocus />
+        <input type="text" id="idNumber" name="idNumber" placeholder="Enter ID Number" required />
+        <button type="submit">LOG IN</button>
+      </form>
+      <div class="error" id="errorMsg" aria-live="polite"></div>
+
+      <table>
+        <tr>
+          <td align="left">Task ID: X-S1-001</td>
+          <td align="right">Date issued: 8/12/25</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="footer-note">
+            WE ARE EVERYWHERE - THE WATCHER
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const usersUrl = "https://heuexe.github.io/status.EX-OS/agents.json";
+
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    let validUsers = {};
+
+    async function loadUsers() {
+      try {
+        const response = await fetch(usersUrl);
+        if (!response.ok) throw new Error("Failed to load user data");
+        validUsers = await response.json();
+      } catch (error) {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Error loading user data.";
+        console.error(error);
+      }
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const codename = document.getElementById("codename").value.trim();
+      const idNumber = document.getElementById("idNumber").value.trim();
+
+      if (
+        validUsers[codename] &&
+        validUsers[codename].Id === idNumber &&
+        validUsers[codename].Status === "Active"
+      ) {
+        errorMsg.style.color = "var(--success-color)";
+        errorMsg.textContent = "Access granted. Loading mission interface...";
+
+        setTimeout(() => {
+          form.style.display = "none";
+
+          const iframe = document.createElement("iframe");
+          iframe.src = `https://heuexe.github.io/status.EX-OS/mission-status.html?codename=${encodeURIComponent(codename)}&id=${encodeURIComponent(idNumber)}`;
+          iframe.style.width = "100vw";
+          iframe.style.height = "100vh";
+          iframe.style.border = "none";
+
+          document.body.appendChild(iframe);
+        }, 1200);
+      } else {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Invalid Codename or ID. Try again.";
+      }
+    });
+
+    loadUsers();
+  </script>
+</body>
+</html>
