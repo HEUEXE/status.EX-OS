@@ -1,8 +1,14 @@
-[
-  {
-    "codename": "X-S1-001",
-    "rank": "Candidate",
-    "status": "Active",
-    "missions": ["Extraction"]
+{
+  "Copycat": {
+    "Id": "XSI-JFK-NPQ",
+    "Status": "Active",
+    "Mission": ["Extraction"],
+    "Description": "Connecting to a target's smartphone to extract call data, text messages, stored files (like photos, documents), app data, and location history to understand their activities and contacts."
+  },
+  "Null": {
+    "Id": "HWN-ZDC-JQG",
+    "Status": "Active",
+    "Mission": ["Secure Parameter"],
+    "Description": "Patrol the agency"
   }
-]
+}
