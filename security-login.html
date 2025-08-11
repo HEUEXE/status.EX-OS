@@ -176,60 +176,46 @@
   </div>
 
   <script>
-    const form = document.getElementById("loginForm");
-const errorMsg = document.getElementById("errorMsg");
+  const form = document.getElementById("loginForm");
+  const errorMsg = document.getElementById("errorMsg");
+  let validUsers = {}; 
 
-// Make sure validUsers is loaded somewhere before using it
-let validUsers = {}; 
+  // Load valid users data
+  fetch('https://heuexe.github.io/status.EX-OS/agents.json')
+    .then(res => res.json())
+    .then(data => {
+      validUsers = data;
+    })
+    .catch(err => {
+      errorMsg.style.color = "var(--error-color)";
+      errorMsg.textContent = "Error loading user data.";
+      console.error(err);
+    });
 
-// Example: Load users JSON (you need to load this if you haven't already)
-fetch('https://heuexe.github.io/status.EX-OS/agents.json')
-  .then(res => res.json())
-  .then(data => validUsers = data)
-  .catch(err => {
-    errorMsg.style.color = "var(--error-color)";
-    errorMsg.textContent = "Error loading user data.";
-    console.error(err);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const codename = document.getElementById("codename").value.trim();
+    const idNumber = document.getElementById("idNumber").value.trim();
+
+    if (
+      validUsers[codename] &&
+      validUsers[codename].Id === idNumber &&
+      validUsers[codename].Status === "Active"
+    ) {
+      errorMsg.style.color = "var(--success-color)";
+      errorMsg.textContent = "Access granted. Loading mission interface...";
+
+      setTimeout(() => {
+        // Redirect to mission-status.html with parameters
+        window.location.href = `https://heuexe.github.io/status.EX-OS/mission-status.html?codename=${encodeURIComponent(codename)}&id=${encodeURIComponent(idNumber)}`;
+      }, 1200);
+
+    } else {
+      errorMsg.style.color = "var(--error-color)";
+      errorMsg.textContent = "Invalid Codename or ID. Try again.";
+    }
   });
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const codename = document.getElementById("codename").value.trim();
-  const idNumber = document.getElementById("idNumber").value.trim();
-
-  if (
-    validUsers[codename] &&
-    validUsers[codename].Id === idNumber &&
-    validUsers[codename].Status === "Active"
-  ) {
-    errorMsg.style.color = "var(--success-color)";
-    errorMsg.textContent = "Access granted. Loading mission interface...";
-
-    setTimeout(() => {
-      form.style.display = "none";
-
-      fetch(`https://heuexe.github.io/status.EX-OS/mission-status.html?codename=${encodeURIComponent(codename)}&id=${encodeURIComponent(idNumber)}`)
-        .then(response => {
-          if (!response.ok) throw new Error("Failed to load mission interface");
-          return response.text();
-        })
-        .then(html => {
-          // Replace the whole body content with fetched HTML
-          document.body.innerHTML = html;
-        })
-        .catch(error => {
-          errorMsg.style.color = "var(--error-color)";
-          errorMsg.textContent = "Failed to load mission interface.";
-          console.error(error);
-          form.style.display = "flex"; // show form again on error
-        });
-    }, 1200);
-  } else {
-    errorMsg.style.color = "var(--error-color)";
-    errorMsg.textContent = "Invalid Codename or ID. Try again.";
-  }
-});
-  </script>
+</script>
 </body>
 </html>
