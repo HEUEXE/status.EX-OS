@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EX-OS Mission Interface</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #111;
+      --text-light: #bbb;
+      --text-muted: #666;
+      --primary-color: #1a1a1a;
+      --border-color: #333;
+      --font-family: 'Share Tech Mono', monospace;
+      --highlight-color: #0f0;
+      --error-color: #f33;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      height: 100vh;
+      background-color: var(--bg);
+      color: var(--text-light);
+      font-family: var(--font-family);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    body > .container {
+      width: 90vw;
+      max-width: 900px;
+      background-color: var(--primary-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 20px 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      min-height: 70vh;
+      user-select: none;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      width: 60px;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+    header .motto {
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      user-select: text;
+    }
+    h1 {
+      margin: 0;
+      font-weight: normal;
+      font-size: 26px;
+      color: var(--highlight-color);
+      user-select: text;
+    }
+    .mission-info {
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-light);
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-right: 5px;
+      user-select: text;
+    }
+    .mission-info p {
+      margin: 0 0 1em 0;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+      user-select: none;
+    }
+    button {
+      align-self: center;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background-color: var(--highlight-color);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-family);
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="EX-OS Logo" />
+      <h1>MISSION STATUS</h1>
+      <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
+    </header>
+
+    <section class="mission-info" id="missionInfo" tabindex="0" aria-live="polite">
+      <p>Loading mission details...</p>
+    </section>
+
+    <button id="refreshBtn" type="button" aria-label="Refresh mission status">Refresh Mission</button>
+
+    <footer>
+      Task ID: <span id="taskId">X-S1-001</span> &nbsp; | &nbsp;
+      Date Issued: <span id="dateIssued">8/12/25</span> &nbsp; | &nbsp;
+      Operative: <span id="operativeName">Unknown</span>
+    </footer>
+  </div>
+
+  <script>
+    // Example: populate mission details dynamically (replace with real data fetching)
+
+    const missionInfoEl = document.getElementById('missionInfo');
+    const taskIdEl = document.getElementById('taskId');
+    const dateIssuedEl = document.getElementById('dateIssued');
+    const operativeNameEl = document.getElementById('operativeName');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    // Read codename and id from URL query parameters
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        codename: params.get('codename') || 'Unknown',
+        id: params.get('id') || 'Unknown'
+      };
+    }
+
+    function loadMissionData() {
+      const { codename, id } = getQueryParams();
+
+      operativeNameEl.textContent = codename;
+
+      // Simulated mission data; replace with actual API fetch if needed
+      const missionData = `
+        <p><strong>Mission Code:</strong> ${id}</p>
+        <p><strong>Objective:</strong> Infiltrate the target facility without detection.</p>
+        <p><strong>Status:</strong> <span style="color: var(--highlight-color);">Active</span></p>
+        <p><strong>Instructions:</strong></p>
+        <ul>
+          <li>Gather intelligence on enemy movement.</li>
+          <li>Extract sensitive data files.</li>
+          <li>Evade surveillance and return safely.</li>
+        </ul>
+      `;
+
+      missionInfoEl.innerHTML = missionData;
+    }
+
+    refreshBtn.addEventListener('click', () => {
+      missionInfoEl.textContent = 'Refreshing mission details...';
+      setTimeout(loadMissionData, 1000); // simulate async loading
+    });
+
+    // Load on page load
+    window.addEventListener('DOMContentLoaded', loadMissionData);
+  </script>
+</body>
+</html>
