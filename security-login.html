@@ -176,57 +176,45 @@
   </div>
 
   <script>
-    const usersUrl = "https://heuexe.github.io/status.EX-OS/agents.json";
-
-    const form = document.getElementById("loginForm");
-    const errorMsg = document.getElementById("errorMsg");
-
-    let validUsers = {};
-
-    async function loadUsers() {
-      try {
-        const response = await fetch(usersUrl);
-        if (!response.ok) throw new Error("Failed to load user data");
-        validUsers = await response.json();
-      } catch (error) {
-        errorMsg.style.color = "var(--error-color)";
-        errorMsg.textContent = "Error loading user data.";
-        console.error(error);
-      }
-    }
-
     form.addEventListener("submit", (e) => {
-      e.preventDefault();
+  e.preventDefault();
 
-      const codename = document.getElementById("codename").value.trim();
-      const idNumber = document.getElementById("idNumber").value.trim();
+  const codename = document.getElementById("codename").value.trim();
+  const idNumber = document.getElementById("idNumber").value.trim();
 
-      if (
-        validUsers[codename] &&
-        validUsers[codename].Id === idNumber &&
-        validUsers[codename].Status === "Active"
-      ) {
-        errorMsg.style.color = "var(--success-color)";
-        errorMsg.textContent = "Access granted. Loading mission interface...";
+  if (
+    validUsers[codename] &&
+    validUsers[codename].Id === idNumber &&
+    validUsers[codename].Status === "Active"
+  ) {
+    errorMsg.style.color = "var(--success-color)";
+    errorMsg.textContent = "Access granted. Loading mission interface...";
 
-        setTimeout(() => {
-          form.style.display = "none";
+    setTimeout(() => {
+      form.style.display = "none";
 
-          const iframe = document.createElement("iframe");
-          iframe.src = `https://heuexe.github.io/status.EX-OS/mission-status.html?codename=${encodeURIComponent(codename)}&id=${encodeURIComponent(idNumber)}`;
-          iframe.style.width = "100vw";
-          iframe.style.height = "100vh";
-          iframe.style.border = "none";
+      fetch(`https://heuexe.github.io/status.EX-OS/mission-status.html?codename=${encodeURIComponent(codename)}&id=${encodeURIComponent(idNumber)}`)
+        .then(response => {
+          if (!response.ok) throw new Error("Failed to load mission interface");
+          return response.text();
+        })
+        .then(html => {
+          // Replace the whole body content with fetched HTML
+          document.body.innerHTML = html;
+        })
+        .catch(error => {
+          errorMsg.style.color = "var(--error-color)";
+          errorMsg.textContent = "Failed to load mission interface.";
+          console.error(error);
+          form.style.display = "flex"; // show form again on error
+        });
+    }, 1200);
+  } else {
+    errorMsg.style.color = "var(--error-color)";
+    errorMsg.textContent = "Invalid Codename or ID. Try again.";
+  }
+});
 
-          document.body.appendChild(iframe);
-        }, 1200);
-      } else {
-        errorMsg.style.color = "var(--error-color)";
-        errorMsg.textContent = "Invalid Codename or ID. Try again.";
-      }
-    });
-
-    loadUsers();
   </script>
 </body>
 </html>
