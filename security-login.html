@@ -176,29 +176,43 @@
   </div>
 
   <script>
-  form.addEventListener("submit", (e) => {
-  e.preventDefault();
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+    let validUsers = {};
 
-  const codename = document.getElementById("codename").value.trim();
-  const idNumber = document.getElementById("idNumber").value.trim();
+    fetch('https://heuexe.github.io/status.EX-OS/agents.json')
+      .then(res => res.json())
+      .then(data => {
+        validUsers = data;
+      })
+      .catch(err => {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Error loading user data.";
+        console.error(err);
+      });
 
-  if (
-    validUsers[codename] &&
-    validUsers[codename].Id === idNumber &&
-    validUsers[codename].Status === "Active"
-  ) {
-    errorMsg.style.color = "var(--success-color)";
-    errorMsg.textContent = "Access granted. Redirecting...";
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    setTimeout(() => {
-      // Redirect to exact URL, no parameters
-      window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
-    }, 1200);
-  } else {
-    errorMsg.style.color = "var(--error-color)";
-    errorMsg.textContent = "Invalid Codename or ID. Try again.";
-  }
-});
-</script>
+      const codename = document.getElementById("codename").value.trim();
+      const idNumber = document.getElementById("idNumber").value.trim();
+
+      if (
+        validUsers[codename] &&
+        validUsers[codename].Id === idNumber &&
+        validUsers[codename].Status === "Active"
+      ) {
+        errorMsg.style.color = "var(--success-color)";
+        errorMsg.textContent = "Access granted. Redirecting...";
+
+        setTimeout(() => {
+          window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
+        }, 1200);
+      } else {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Invalid Codename or ID. Try again.";
+      }
+    });
+  </script>
 </body>
 </html>
