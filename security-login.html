@@ -177,42 +177,55 @@
 
   <script>
     const form = document.getElementById("loginForm");
-    const errorMsg = document.getElementById("errorMsg");
-    let validUsers = {};
+const errorMsg = document.getElementById("errorMsg");
+let validUsers = null;  // Start as null until loaded
 
-    fetch('https://heuexe.github.io/status.EX-OS/agents.json')
-      .then(res => res.json())
-      .then(data => {
-        validUsers = data;
-      })
-      .catch(err => {
-        errorMsg.style.color = "var(--error-color)";
-        errorMsg.textContent = "Error loading user data.";
-        console.error(err);
-      });
+// Disable submit until data loads
+form.querySelector('button[type="submit"]').disabled = true;
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+fetch('https://heuexe.github.io/status.EX-OS/agents.json')
+  .then(res => res.json())
+  .then(data => {
+    validUsers = data;
+    form.querySelector('button[type="submit"]').disabled = false; // Enable submit now
+  })
+  .catch(err => {
+    errorMsg.style.color = "var(--error-color)";
+    errorMsg.textContent = "Error loading user data.";
+    console.error(err);
+  });
 
-      const codename = document.getElementById("codename").value.trim();
-      const idNumber = document.getElementById("idNumber").value.trim();
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-      if (
-        validUsers[codename] &&
-        validUsers[codename].Id === idNumber &&
-        validUsers[codename].Status === "Active"
-      ) {
-        errorMsg.style.color = "var(--success-color)";
-        errorMsg.textContent = "Access granted. Redirecting...";
+  if (!validUsers) {
+    errorMsg.style.color = "var(--error-color)";
+    errorMsg.textContent = "User data not loaded yet. Please wait.";
+    return; // prevent submit until data ready
+  }
 
-        setTimeout(() => {
-          window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
-        }, 1200);
-      } else {
-        errorMsg.style.color = "var(--error-color)";
-        errorMsg.textContent = "Invalid Codename or ID. Try again.";
-      }
-    });
+  const codename = document.getElementById("codename").value.trim();
+  const idNumber = document.getElementById("idNumber").value.trim();
+
+  // Debug
+  console.log('Checking:', codename, idNumber, validUsers[codename]);
+
+  if (
+    validUsers[codename] &&
+    validUsers[codename].Id === idNumber &&
+    validUsers[codename].Status === "Active"
+  ) {
+    errorMsg.style.color = "var(--success-color)";
+    errorMsg.textContent = "Access granted. Redirecting...";
+
+    setTimeout(() => {
+      window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
+    }, 1200);
+  } else {
+    errorMsg.style.color = "var(--error-color)";
+    errorMsg.textContent = "Invalid Codename or ID. Try again.";
+  }
+});
   </script>
 </body>
 </html>
