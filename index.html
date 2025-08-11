@@ -10,6 +10,14 @@
       --f-unit: 1vmin;
       --f: calc(var(--f-size) * var(--f-unit));
       --bg: #111;
+      --text-light: #bbb;
+      --text-muted: #666;
+      --btn-bg: #222;
+      --btn-border: #555;
+      --btn-hover-bg: #555;
+      --btn-hover-color: #f33;
+      --border-color: #333;
+      --font-family: 'Share Tech Mono', monospace;
     }
 
     *, *::after, *::before {
@@ -21,7 +29,7 @@
       padding: 0;
       background-color: var(--bg);
       color: #fff;
-      font-family: 'Share Tech Mono', monospace;
+      font-family: var(--font-family);
       overflow: hidden;
       height: 100vh;
       display: flex;
@@ -41,13 +49,13 @@
 
     .confess-box {
       background-color: #1a1a1a;
-      border: 1px solid #333;
+      border: 1px solid var(--border-color);
       padding: 20px;
       max-width: 600px;
       width: 90%;
       border-radius: 6px;
       font-size: 13px;
-      color: #bbb;
+      color: var(--text-light);
       text-align: center;
       z-index: 2;
       display: flex;
@@ -60,6 +68,7 @@
     .confess-box a {
       color: #fff;
       text-decoration: none;
+      user-select: none;
     }
 
     .confess-box a:hover {
@@ -69,18 +78,21 @@
 
     .confess-box img {
       margin-bottom: 10px;
+      width: 60px;
+      user-select: none;
     }
 
     .confess-box .motto {
       font-size: 14px;
       letter-spacing: 1px;
       margin-bottom: 10px;
-      color: #666;
+      color: var(--text-muted);
+      user-select: text;
     }
 
     hr {
       border: none;
-      border-top: 1px solid #333333;
+      border-top: 1px solid var(--border-color);
       width: 80%;
       margin: 20px auto;
     }
@@ -92,11 +104,11 @@
     }
 
     button {
-      background-color: #222;
-      border: 1px solid #555;
+      background-color: var(--btn-bg);
+      border: 1px solid var(--btn-border);
       color: #fff;
       padding: 10px 25px;
-      font-family: 'Share Tech Mono', monospace;
+      font-family: var(--font-family);
       font-size: 16px;
       cursor: pointer;
       border-radius: 4px;
@@ -105,8 +117,8 @@
     }
 
     button:hover {
-      background-color: #555;
-      color: #f33;
+      background-color: var(--btn-hover-bg);
+      color: var(--btn-hover-color);
     }
 
     table {
@@ -114,6 +126,7 @@
       color: #661319;
       width: 100%;
       margin-top: auto;
+      user-select: none;
     }
 
     table td {
@@ -122,30 +135,31 @@
 
     .footer-note {
       padding-top: 5px;
-      color: #777777;
+      color: #777;
       text-align: center;
+      user-select: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="main" aria-label="Mission Interface Introduction">
     <div class="confess-box">
-      <a href="#">
+      <a href="#" aria-label="Organization Logo">
         <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" width="60" />
       </a>
-      <div class="motto">
+      <div class="motto" aria-live="polite">
         EXECUTE IN SILENCE — STRIKE WITH LOGIC
       </div>
 
-      <div id="countdown" style="margin-top: 5px; font-size: 14px; color: #aaa;"></div>
-
+      <div id="countdown" style="margin-top: 5px; font-size: 14px; color: #aaa;" aria-live="polite"></div>
 
       <hr />
 
-      <div id="typewriter"></div>
+      <div id="typewriter" aria-live="polite" aria-atomic="true" aria-relevant="text"></div>
 
-      <div id="buttons">
-        <button id="proceedBtn">PROCEED</button>
+      <div id="buttons" role="region" aria-label="Proceed Button Container">
+        <button id="proceedBtn" type="button" aria-describedby="proceed-desc">PROCEED</button>
+        <span id="proceed-desc" class="sr-only">Click to proceed to login interface</span>
       </div>
 
       <hr />
@@ -175,8 +189,6 @@
       "Finalizing data stream...",
       "Authenticate your identity"
     ];
-
-
 
     const typewriterEl = document.getElementById("typewriter");
     const buttonsEl = document.getElementById("buttons");
@@ -227,7 +239,7 @@
       if (timeLeft <= 0) {
         clearInterval(countdown);
         document.body.innerHTML = `
-          <div style="color:red; background-color:#000; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:'Share Tech Mono', monospace;">
+          <div style="color:red; background-color:#000; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:var(--font-family);">
             <h1 style="font-size: 36px;">FILE DESTROYED</h1>
             <p style="color: #aaa; font-size: 14px;">This mission file is no longer accessible.</p>
           </div>
@@ -242,22 +254,38 @@
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
       const countdownEl = document.getElementById("countdown");
       if (countdownEl) {
-        countdownEl.innerHTML = `Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countdownEl.textContent = `Time Left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
       }
       document.title = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
 
     document.getElementById("proceedBtn").addEventListener("click", () => {
-     fetch('https://heuexe.github.io/status.EX-OS/security-login.html')
-    .then(response => response.text())
-    .then(html => {
-      document.body.innerHTML = html;
-    })
-    .catch(err => {
-      console.error('Failed to load login page:', err);
+      fetch('https://heuexe.github.io/status.EX-OS/security-login.html')
+        .then(response => {
+          if (!response.ok) throw new Error("Failed to load login page");
+          return response.text();
+        })
+        .then(html => {
+          document.body.innerHTML = html;
+        })
+        .catch(err => {
+          console.error('Failed to load login page:', err);
+        });
     });
-});
-
   </script>
+
+  <style>
+    /* Hide element for screen readers */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      border: 0 !important;
+    }
+  </style>
 </body>
 </html>
