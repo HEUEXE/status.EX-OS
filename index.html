@@ -260,7 +260,7 @@
     }, 1000);
 
     document.getElementById("proceedBtn").addEventListener("click", () => {
-      fetch('https://heuexe.github.io/status.EX-OS/security-login.html')
+      fetch('https://heuexe.github.io/status.EX-OS/main.html')
         .then(response => {
           if (!response.ok) throw new Error("Failed to load login page");
           return response.text();
