@@ -31,12 +31,6 @@
       align-items: center;
       overflow: hidden;
     }
-    body > iframe {
-      display: block;
-      width: 100vw;
-      height: 100vh;
-      border: none;
-    }
     .container {
       width: 100vw;
       height: 100vh;
@@ -63,14 +57,6 @@
       min-height: 220px;
       user-select: none;
     }
-    .container-box a {
-      color: #fff;
-      text-decoration: none;
-    }
-    .container-box a:hover {
-      color: red;
-      text-decoration: underline;
-    }
     .container-box img {
       margin-bottom: 15px;
       width: 60px;
@@ -89,7 +75,7 @@
       flex-direction: column;
       align-items: center;
     }
-    input[type="text"], input[type="password"] {
+    input[type="text"] {
       width: 100%;
       padding: 10px;
       margin: 12px 0;
@@ -118,7 +104,11 @@
       transition: background-color 0.3s, color 0.3s;
       user-select: none;
     }
-    button:hover {
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    button:hover:enabled {
       background-color: var(--hover-color);
       color: var(--hover-text-color);
     }
@@ -128,104 +118,81 @@
       font-size: 13px;
       min-height: 18px;
     }
-    table {
-      font-size: 12px;
-      color: #661319;
-      width: 100%;
-      margin-top: auto;
-      user-select: none;
-    }
-    table td {
-      padding: 0 5px;
-    }
-    .footer-note {
-      padding-top: 5px;
-      color: #777;
-      text-align: center;
-      user-select: none;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="container-box">
-      <a href="#">
-        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
-      </a>
+      <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
       <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
 
       <form id="loginForm" autocomplete="off" novalidate>
         <input type="text" id="codename" name="codename" placeholder="Enter Codename" required autofocus />
         <input type="text" id="idNumber" name="idNumber" placeholder="Enter ID Number" required />
-        <button type="submit">LOG IN</button>
+        <button type="submit" disabled>LOG IN</button>
       </form>
       <div class="error" id="errorMsg" aria-live="polite"></div>
-
-      <table>
-        <tr>
-          <td align="left">Task ID: X-S1-001</td>
-          <td align="right">Date issued: 8/12/25</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="footer-note">
-            WE ARE EVERYWHERE - THE WATCHER
-          </td>
-        </tr>
-      </table>
     </div>
   </div>
 
   <script>
     const form = document.getElementById("loginForm");
-const errorMsg = document.getElementById("errorMsg");
-let validUsers = null;  // Start as null until loaded
+    const errorMsg = document.getElementById("errorMsg");
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-// Disable submit until data loads
-form.querySelector('button[type="submit"]').disabled = true;
+    let validUsers = null;
 
-fetch('https://heuexe.github.io/status.EX-OS/agents.json')
-  .then(res => res.json())
-  .then(data => {
-    validUsers = data;
-    form.querySelector('button[type="submit"]').disabled = false; // Enable submit now
-  })
-  .catch(err => {
-    errorMsg.style.color = "var(--error-color)";
-    errorMsg.textContent = "Error loading user data.";
-    console.error(err);
-  });
+    // Load user data and enable submit button
+    fetch('https://heuexe.github.io/status.EX-OS/agents.json')
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load user data");
+        return res.json();
+      })
+      .then(data => {
+        validUsers = data;
+        submitBtn.disabled = false;
+      })
+      .catch(err => {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Error loading user data. Please try again later.";
+        console.error(err);
+      });
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+    form.addEventListener("submit", e => {
+      e.preventDefault();
 
-  if (!validUsers) {
-    errorMsg.style.color = "var(--error-color)";
-    errorMsg.textContent = "User data not loaded yet. Please wait.";
-    return; // prevent submit until data ready
-  }
+      if (!validUsers) {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "User data not loaded yet. Please wait...";
+        return;
+      }
 
-  const codename = document.getElementById("codename").value.trim();
-  const idNumber = document.getElementById("idNumber").value.trim();
+      const codename = document.getElementById("codename").value.trim();
+      const idNumber = document.getElementById("idNumber").value.trim();
 
-  // Debug
-  console.log('Checking:', codename, idNumber, validUsers[codename]);
+      if (!codename || !idNumber) {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Please enter both Codename and ID Number.";
+        return;
+      }
 
-  if (
-    validUsers[codename] &&
-    validUsers[codename].Id === idNumber &&
-    validUsers[codename].Status === "Active"
-  ) {
-    errorMsg.style.color = "var(--success-color)";
-    errorMsg.textContent = "Access granted. Redirecting...";
+      if (
+        validUsers[codename] &&
+        validUsers[codename].Id === idNumber &&
+        validUsers[codename].Status === "Active"
+      ) {
+        errorMsg.style.color = "var(--success-color)";
+        errorMsg.textContent = "Access granted. Redirecting...";
 
-    setTimeout(() => {
-      window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
-    }, 1200);
-  } else {
-    errorMsg.style.color = "var(--error-color)";
-    errorMsg.textContent = "Invalid Codename or ID. Try again.";
-  }
-});
+        setTimeout(() => {
+          // Redirect to exact mission status URL without parameters
+          window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
+        }, 1000);
+      } else {
+        errorMsg.style.color = "var(--error-color)";
+        errorMsg.textContent = "Invalid Codename or ID. Try again.";
+      }
+    });
   </script>
 </body>
 </html>
