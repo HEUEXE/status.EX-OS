@@ -176,46 +176,29 @@
   </div>
 
   <script>
-  const form = document.getElementById("loginForm");
-  const errorMsg = document.getElementById("errorMsg");
-  let validUsers = {}; 
-
-  // Load valid users data
-  fetch('https://heuexe.github.io/status.EX-OS/agents.json')
-    .then(res => res.json())
-    .then(data => {
-      validUsers = data;
-    })
-    .catch(err => {
-      errorMsg.style.color = "var(--error-color)";
-      errorMsg.textContent = "Error loading user data.";
-      console.error(err);
-    });
-
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const codename = document.getElementById("codename").value.trim();
-    const idNumber = document.getElementById("idNumber").value.trim();
+  const codename = document.getElementById("codename").value.trim();
+  const idNumber = document.getElementById("idNumber").value.trim();
 
-    if (
-      validUsers[codename] &&
-      validUsers[codename].Id === idNumber &&
-      validUsers[codename].Status === "Active"
-    ) {
-      errorMsg.style.color = "var(--success-color)";
-      errorMsg.textContent = "Access granted. Loading mission interface...";
+  if (
+    validUsers[codename] &&
+    validUsers[codename].Id === idNumber &&
+    validUsers[codename].Status === "Active"
+  ) {
+    errorMsg.style.color = "var(--success-color)";
+    errorMsg.textContent = "Access granted. Redirecting...";
 
-      setTimeout(() => {
-        // Redirect to mission-status.html with parameters
-        window.location.href = `https://heuexe.github.io/status.EX-OS/mission-status.html?codename=${encodeURIComponent(codename)}&id=${encodeURIComponent(idNumber)}`;
-      }, 1200);
-
-    } else {
-      errorMsg.style.color = "var(--error-color)";
-      errorMsg.textContent = "Invalid Codename or ID. Try again.";
-    }
-  });
+    setTimeout(() => {
+      // Redirect to exact URL, no parameters
+      window.location.href = "https://heuexe.github.io/status.EX-OS/mission-status.html";
+    }, 1200);
+  } else {
+    errorMsg.style.color = "var(--error-color)";
+    errorMsg.textContent = "Invalid Codename or ID. Try again.";
+  }
+});
 </script>
 </body>
 </html>
