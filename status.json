@@ -3,7 +3,6 @@
     "status": "Operational",
     "lastChecked": "2025-08-11T10:00:00Z"
   },
-  {
   "missionStatus": {
     "Pending": "#FFA500",
     "In Progress": "#00FF00",
