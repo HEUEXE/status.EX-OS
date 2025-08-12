@@ -13,7 +13,7 @@ Level 9: Deputy Director — Secret clearance
 Level 10: Director — Top secret clearance
 Level 11: Commander-in-Chief — Ultra top secret clearance
 
-Fields - Field Information
+Fields - description
 Operations — Handles missions and field activities
 Intelligence — Gathers and analyzes data
 Technical — Manages tech, hacking, and cyber ops
@@ -24,3 +24,17 @@ Logistics — Manages supplies and resources
 Training — Prepares agents and specialists
 Research & Development — Innovates new tech and tactics
 Command — Leadership and strategic planning
+
+Mission status - description
+Pending — Mission assigned but not started yet.
+In Progress — Mission is currently active.
+On Hold — Mission paused temporarily.
+Completed — Mission finished successfully.
+Failed — Mission did not meet objectives.
+Cancelled — Mission aborted before completion.
+Under Review — Mission results are being evaluated.
+Awaiting Deployment — Mission ready but waiting for go signal.
+Infiltrating — Mission agent is entering target zone.
+Extraction Phase — Mission involves retrieving assets/personnel.
+Critical Alert — Mission faces urgent issues or danger.
+Standby — Mission on alert, waiting for orders.
