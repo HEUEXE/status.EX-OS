@@ -1,0 +1,20 @@
+{
+  "system": {
+    "status": "Operational",
+    "lastChecked": "2025-08-11T10:00:00Z"
+  },
+  "missionStatus": {
+    "Pending": "#FFA500",
+    "In Progress": "#00FF00",
+    "On Hold": "#FFFF00",
+    "Completed": "#008000",
+    "Failed": "#FF0000",
+    "Cancelled": "#A9A9A9",
+    "Under Review": "#1E90FF",
+    "Awaiting Deployment": "#40E0D0",
+    "Infiltrating": "#800080",
+    "Extraction Phase": "#FFD700",
+    "Critical Alert": "#FF4500",
+    "Standby": "#ADD8E6"
+  }
+}
