@@ -38,3 +38,17 @@ Infiltrating — Mission agent is entering target zone.
 Extraction Phase — Mission involves retrieving assets/personnel.
 Critical Alert — Mission faces urgent issues or danger.
 Standby — Mission on alert, waiting for orders.
+
+agents status - description
+Active – Currently on missions.
+Inactive – Not assigned to any mission.
+On Leave – Temporarily away from duties.
+On Standby – Ready for immediate deployment.
+Deployed – Currently in the field.
+MIA (Missing in Action) – Lost contact during a mission.
+KIA (Killed in Action) – Confirmed deceased.
+Under Investigation – Temporarily pulled from duty pending review.
+Retired – No longer serving.
+Training – Currently in skill development.
+In Transit – Moving between locations/missions.
+Wounded – Injured and recovering.
