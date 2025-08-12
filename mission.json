@@ -1,7 +1,7 @@
 {
   "Copycat": {
     "TaskId": "XSI-JFK-NPQ",
-    "Status": "On Hold",
+    "Status": "Completed",
     "DateIssued": "08/11/2025",
     "Mission": ["Extraction"],
     "Description": "Connect to a target's smartphone to extract call data, text messages, stored files (like photos, documents), app data, and location history to understand their activities and contacts."
