@@ -287,16 +287,18 @@ loginForm.addEventListener('submit', async e => {
   } else {
     errorMsg.textContent = 'Invalid Codename or ID.';
   }
-});
-  async function loadMissionData() {
+});async function loadMissionData() {
   missionInfoEl.innerHTML = '<p>Loading mission details...</p>';
   taskIdEl.textContent = '...';
   dateIssuedEl.textContent = '...';
   operativeNameEl.textContent = currentUser.codename;
-  fetch('https://heuexe.github.io/status.EX-OS/mission.json');
 
   try {
-    const res = await fetch('https://heuexe.github.io/status.EX-OS/mission.json');
+    // Add ?_=${Date.now()} to force a fresh request
+    const res = await fetch(`https://heuexe.github.io/status.EX-OS/mission.json?_=${Date.now()}`, {
+      cache: "no-store"
+    });
+
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const missionsData = await res.json();
 
@@ -328,6 +330,7 @@ loginForm.addEventListener('submit', async e => {
     dateIssuedEl.textContent = 'N/A';
   }
 }
+
   
     // Refresh cooldown
     const refreshCooldown = 10; // seconds
