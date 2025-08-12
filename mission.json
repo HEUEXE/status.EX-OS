@@ -8,7 +8,7 @@
   },
   "Null": {
     "TaskId": "HWN-ZDC-JQG",
-    "Status": "In Progress",
+    "Status": "Standby",
     "DateIssued": "08/11/2025",
     "Mission": ["Secure Parameter"],
     "Description": "Patrol the agency"
