@@ -196,7 +196,7 @@
     (function typeChar() {
       if (i < msg.length) {
         typewriterEl.textContent += msg.charAt(i++);
-        setTimeout(typeChar, 60);
+        setTimeout(typeChar, 10);
       } else {
         setTimeout(callback, 1000);
       }
@@ -251,59 +251,84 @@
 
   let validUsers = null;
   let currentUser = null;
+  
+  let missionStatusColors = {};
+
+async function loadMissionStatusColors() {
+  try {
+    const res = await fetch('https://heuexe.github.io/status.EX-OS/status.json');
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const data = await res.json();
+    missionStatusColors = data.missionStatus || {};
+  } catch (error) {
+    console.error('Error loading mission status colors:', error);
+    missionStatusColors = {};
+  }
+}
 
   fetch('https://heuexe.github.io/status.EX-OS/agents.json')
     .then(res => res.json())
     .then(data => { validUsers = data; submitBtn.disabled = false; })
     .catch(() => { errorMsg.textContent = 'Error loading user data.'; });
+loginForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  errorMsg.textContent = '';
+  if (!validUsers) return errorMsg.textContent = 'User data not loaded yet.';
+  const codename = document.getElementById('codename').value.trim();
+  const idNumber = document.getElementById('idNumber').value.trim();
 
-  loginForm.addEventListener('submit', e => {
-    e.preventDefault();
-    errorMsg.textContent = '';
-    if (!validUsers) return errorMsg.textContent = 'User data not loaded yet.';
-    const codename = document.getElementById('codename').value.trim();
-    const idNumber = document.getElementById('idNumber').value.trim();
-    if (validUsers[codename]?.Id === idNumber && validUsers[codename]?.Status === 'Active') {
+  if (validUsers[codename]?.Id === idNumber && validUsers[codename]?.Status === 'Active') {
     currentUser = { codename, id: idNumber };
-      loginContainer.style.display = 'none';
-      missionContainer.style.display = 'flex';
-      loadMissionData(); // Auto-load immediately
-    } else {
-      errorMsg.textContent = 'Invalid Codename or ID.';
-   }
-  });
+    loginContainer.style.display = 'none';
+    missionContainer.style.display = 'flex';
 
+    await loadMissionStatusColors();  // Wait for colors to load
+    loadMissionData();                 // Then load mission info
+  } else {
+    errorMsg.textContent = 'Invalid Codename or ID.';
+  }
+});
   async function loadMissionData() {
-    missionInfoEl.innerHTML = '<p>Loading mission details...</p>';
-    taskIdEl.textContent = '...';
-    dateIssuedEl.textContent = '...';
-    operativeNameEl.textContent = currentUser.codename;
-    try {
-      const res = await fetch('https://heuexe.github.io/status.EX-OS/mission.json');
-      if (!res.ok) throw new Error();
-      const missionsData = await res.json();
-      const mission = missionsData[currentUser.codename];
-      if (!mission || mission.Status !== 'Active') {
-        missionInfoEl.innerHTML = '<p>Invalid mission or inactive status.</p>';
-        taskIdEl.textContent = mission?.TaskId || 'N/A';
-        dateIssuedEl.textContent = mission?.DateIssued || 'N/A';
-        return;
-      }
-      missionInfoEl.innerHTML = `
-        <p><strong>Mission Type:</strong> ${Array.isArray(mission.Mission) ? mission.Mission.join(', ') : mission.Mission}</p>
-        <p><strong>Status:</strong> <span style="color: var(--highlight-color);">${mission.Status}</span></p>
-        <p><strong>Description:</strong></p>
-        <p>${mission.Description}</p>
-      `;
-      taskIdEl.textContent = mission.TaskId || 'N/A';
-      dateIssuedEl.textContent = mission.DateIssued || 'N/A';
-    } catch {
-      missionInfoEl.innerHTML = '<p>Error loading mission data.</p>';
+  missionInfoEl.innerHTML = '<p>Loading mission details...</p>';
+  taskIdEl.textContent = '...';
+  dateIssuedEl.textContent = '...';
+  operativeNameEl.textContent = currentUser.codename;
+  fetch('https://heuexe.github.io/status.EX-OS/mission.json');
+
+  try {
+    const res = await fetch('https://heuexe.github.io/status.EX-OS/mission.json');
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const missionsData = await res.json();
+
+    const mission = missionsData[currentUser.codename];
+    if (!mission) {
+      missionInfoEl.innerHTML = `<p>No mission found for operative "${currentUser.codename}".</p>`;
       taskIdEl.textContent = 'N/A';
       dateIssuedEl.textContent = 'N/A';
+      return;
     }
-  }
 
+    const missionStatus = mission.Status?.trim() || 'Unknown';
+    const statusColor = missionStatusColors[missionStatus] || '#fff';
+
+    missionInfoEl.innerHTML = `
+      <p><strong>Mission Type:</strong> ${Array.isArray(mission.Mission) ? mission.Mission.join(', ') : mission.Mission}</p>
+      <p><strong>Status:</strong> <span style="color: ${statusColor}; font-weight: bold;">${missionStatus}</span></p>
+      <p><strong>Description:</strong></p>
+      <p>${mission.Description}</p>
+    `;
+
+    taskIdEl.textContent = mission.TaskId || 'N/A';
+    dateIssuedEl.textContent = mission.DateIssued || 'N/A';
+
+  } catch (error) {
+    console.error('Error loading mission data:', error);
+    missionInfoEl.innerHTML = '<p>Error loading mission data.</p>';
+    taskIdEl.textContent = 'N/A';
+    dateIssuedEl.textContent = 'N/A';
+  }
+}
+  
     // Refresh cooldown
     const refreshCooldown = 10; // seconds
     let refreshTimer = null;
