@@ -1,23 +1,23 @@
 {
   "Copycat": {
-    "Full Name": "REDACTED",
-    "Birth Date": "REDACTED",
+    "FullName": "REDACTED",
+    "BirthDate": "REDACTED",
     "Gender": "REDACTED",
     "Email": "REDACTED@gmail.com",
     "Contact": "REDACTED",
     "Address": "REDACTED"
   },
   "Bravo-X-S1": {
-    "Full Name": "Miguel S. Rubio",
-    "Birth Date": "JULY 25, 2008",
+    "FullName": "Miguel S. Rubio",
+    "BirthDate": "JULY 25, 2008",
     "Gender": "REDACTED",
     "Email": "miguel.rubio1125@gmail.com",
     "Contact": "09929917154",
     "Address": "BLK 25, SITIO RUBY, FAIRVIEW, QUEZON CITY"
   },
   "Null": {
-    "Full Name": "Vincent Encienzo",
-    "Birth Date": "NOVEMBER 18, 2007",
+    "FullName": "Vincent Encienzo",
+    "BirthDate": "NOVEMBER 18, 2007",
     "Gender": "MALE",
     "Email": "vincent.encienzo@gmail.com",
     "Contact": "Unknown",
