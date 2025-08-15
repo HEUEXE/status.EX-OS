@@ -1,386 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>X-XX-XXX</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --f-size: 15;
-      --f-unit: 1vmin;
-      --f: calc(var(--f-size) * var(--f-unit));
-      --bg: #111;
-      --text-light: #bbb;
-      --text-muted: #666;
-      --btn-bg: #222;
-      --btn-border: #555;
-      --btn-hover-bg: #555;
-      --btn-hover-color: #f33;
-      --border-color: #333;
-      --font-family: 'Share Tech Mono', monospace;
-      --error-color: #f33;
-      --success-color: #0f0;
-      --primary-color: #222;
-      --hover-color: #555;
-      --hover-text-color: #f33;
-      --button-bg: var(--primary-color);
-      --button-border: #555;
-      --button-hover-bg: var(--hover-color);
-      --button-hover-color: var(--hover-text-color);
-      --highlight-color: #0f0;
-    }
-    *, *::after, *::before { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0;
-      background-color: var(--bg);
-      color: #fff;
-      font-family: var(--font-family);
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    /* Intro screen */
-    #introScreen .container {
-      width: 100vw; height: 100vh;
-      display: flex; justify-content: center; align-items: center;
-    }
-    .main-box {
-      background-color: #1a1a1a;
-      border: 1px solid var(--border-color);
-      padding: 20px; max-width: 600px; width: 90%;
-      border-radius: 6px; font-size: 13px;
-      color: var(--text-light); text-align: center;
-      display: flex; flex-direction: column; align-items: center;
-      min-height: 220px;
-    }
-    .main-box img { margin-bottom: 10px; width: 60px; user-select: none; }
-    .main-box .motto { font-size: 14px; letter-spacing: 1px; margin-bottom: 10px; color: var(--text-muted); }
-    hr { border: none; border-top: 1px solid var(--border-color); width: 80%; margin: 20px auto; }
-    #buttons { display: none; margin-top: 10px; justify-content: center; }
-    button {
-      background-color: var(--btn-bg); border: 1px solid var(--btn-border);
-      color: #fff; padding: 10px 25px; font-family: var(--font-family);
-      font-size: 16px; cursor: pointer; border-radius: 4px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    button:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-color); }
-    table { font-size: 12px; color: #661319; width: 100%; margin-top: auto; }
-    table td { padding: 0 5px; }
-    .footer-note { padding-top: 5px; color: #777; text-align: center; }
-    /* Main screen */
-    #mainScreen { display: none; width: 100%; height: 100%; justify-content: center; align-items: center; }
-    #mainScreen .container {
-      width: 90vw; max-width: 600px; background-color: #1a1a1a;
-      border: 1px solid var(--border-color); border-radius: 6px;
-      padding: 20px 30px; display: flex; flex-direction: column; min-height: 300px;
-    }
-    header { text-align: center; margin-bottom: 20px; }
-    header img { width: 60px; margin-bottom: 10px; }
-    header .motto { font-size: 14px; letter-spacing: 1px; color: var(--text-muted); }
-    h1 { margin: 0; font-weight: normal; font-size: 26px; color: var(--text-muted); }
-    form { width: 100%; display: flex; flex-direction: column; align-items: center; }
-    input[type="text"] {
-      width: 85%; padding: 10px; margin: 12px 0; border-radius: 4px;
-      border: 1px solid #444; background-color: var(--primary-color);
-      color: #eee; font-family: var(--font-family); font-size: 14px;
-    }
-    input::placeholder { color: var(--text-muted); }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
-    .error { color: var(--error-color); margin-top: 12px; font-size: 13px; min-height: 18px; text-align: center; }
-    .mission-info {
-      font-size: 15px; line-height: 1.5; color: var(--text-light);
-      flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 20px;
-    }
-    .footer { font-size: 12px; color: #666; border-top: 1px solid var(--border-color);
-      padding-top: 10px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-    .button-row { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
-    .button-row button { width: 48%; }
-    #missionContainer { display: none; flex-direction: column; height: 100%; }
-  </style>
+<meta charset="UTF-8" />
+<title>XX-XX-XX</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg:#111; --text-light:#bbb; --text-muted:#666; --btn-bg:#222; --btn-border:#555;
+  --btn-hover-bg:#555; --btn-hover-color:#f33; --border-color:#333; --font-family:'Share Tech Mono', monospace;
+  --error-color:#f33; --success-color:#0f0; --primary-color:#222; --highlight-color:#0f0;
+}
+*, *::after, *::before { box-sizing:border-box; }
+html, body { margin:0; padding:0; background-color:var(--bg); color:#fff; font-family:var(--font-family); overflow:hidden; height:100vh; display:flex; justify-content:center; align-items:center; }
+.page { display:none; width:100%; height:100%; justify-content:center; align-items:center; }
+.active { display:flex !important; }
+.main-box { background-color:#1a1a1a; border:1px solid var(--border-color); padding:25px; border-radius:6px; font-size:13px; color:var(--text-light); display:flex; flex-direction:column; min-height:250px; }
+.main-box h2 { text-align:center; }
+.main-box p { text-align:left; padding-left:60px; margin:0 0 10px 0; }
+.main-box img {
+  display: block;       /* remove inline alignment issues */
+  margin: 0 auto 10px;  /* auto left/right to center, 10px bottom */
+  width: 60px;
+  user-select: none;
+}
+.intro-box { width:400px; }
+.login-box { width:400px; }
+.menu-box { width:600px; min-height:400px; padding:20px; }
+.profile-box { width:550px; }
+.mission-box { width:700px; }
+.menu-header { text-align:left; }
+.menu-header p { margin:5px 0; }
+.menu-footer, .menu-left-buttons, .page-footer { display:flex; gap:10px; }
+.menu-footer { justify-content:space-between; align-items:flex-end; margin-top:auto; }
+.page-footer { justify-content:flex-start; margin-top:auto; }
+.main-box img { margin-bottom:10px; width:60px; user-select:none; }
+.main-box .motto { font-size:14px; letter-spacing:1px; margin-bottom:10px; color:var(--text-muted); text-align:center; }
+.footer { font-size:12px; color:#666; border-top:1px solid var(--border-color); padding-top:5px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.footer-note { padding-top:5px; color:#777; text-align:center; }
+hr { border:none; border-top:1px solid var(--border-color); width:80%; margin:20px auto; }
+button { background-color:var(--btn-bg); border:1px solid var(--btn-border); color:#fff; padding:10px 25px; font-family:var(--font-family); font-size:16px; cursor:pointer; border-radius:4px; transition:0.3s; }
+button:hover { background-color:var(--btn-hover-bg); color:var(--btn-hover-color); }
+input[type="text"] { width:85%; padding:10px; margin:12px 0; border-radius:4px; border:1px solid #444; background-color:var(--primary-color); color:#eee; font-family:var(--font-family); font-size:14px; }
+.error { color:var(--error-color); margin-top:12px; font-size:13px; min-height:18px; text-align:center; }
+.mission-info { font-size:15px; line-height:1.5; color:var(--text-light); flex-grow:1; overflow-y:auto; padding-right:5px; margin-bottom:20px; }
+.mission-info p {
+  padding: 2px 64px;
+  border-radius: 6px;
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+.button-row { display:flex; justify-content:space-between; margin-bottom:10px; gap:100px; }
+.agent-description {
+  padding: 10px 15px;       /* Top/Bottom:10px, Left/Right:15px */
+  margin: 5px 0;            /* Space above and below */
+  border-radius: 6px;       /* Rounded corners */
+  color: #ccc;              /* Text color */
+  font-size: 14px;          /* Adjust size */
+  line-height: 1.5;         /* For readability */
+}
+
+</style>
 </head>
 <body>
 
-<!-- Intro Screen -->
-<div id="introScreen">
-  <div class="container">
-    <div class="main-box">
-      <a href="#"><img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" /></a>
-      <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
-      <div id="countdown" style="margin-top: 5px; font-size: 14px; color: #aaa;"></div>
+<!-- INTRO -->
+<div id="introScreen" class="page active">
+  <div class="main-box intro-box" style="align-items:center;">
+    <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
+    <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
+    <hr />
+    <div id="typewriter"></div>
+    <div id="introButtons" style="display:none; margin-top:10px;">
+      <button id="proceedBtn">PROCEED</button>
+    </div>
+    <hr />
+    <div class="footer-note">WE ARE EVERYWHERE - THE WATCHER</div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="loginPage" class="page">
+  <div class="main-box login-box" style="align-items:center;">
+    <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
+    <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
+    <hr />
+    <input type="text" id="codename" placeholder="Enter Codename" required />
+    <input type="text" id="idNumber" placeholder="Enter ID Number" required />
+    <button id="loginBtn" disabled>LOG IN</button>
+    <div class="error" id="errorMsg"></div>
+    <hr />
+    <div class="footer-note">WE ARE EVERYWHERE - THE WATCHER</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="mainMenu" class="page">
+  <div class="main-box menu-box">
+    <div class="menu-header">
+      <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
+      <h2>DASHBOARD</h2>
       <hr />
-      <div id="typewriter"></div>
-      <div id="buttons">
-        <button id="proceedBtn">PROCEED</button>
+      <p><strong>Codename:</strong> <span id="dashCodename"></span></p>
+      <p><strong>Rank:</strong> <span id="dashRank"></span></p>
+      <p><strong>Field:</strong> <span id="dashField"></span></p>
+      <p><strong>Status:</strong> <span id="dashStatus"></span></p>
+      <p><strong>Description:</strong> <span class="agent-description" id="dashDescription"></span></p>
+    </div>
+    <hr />
+    <div id="agentContainer" style="flex:1; overflow:auto; margin-top:10px;"></div>
+    <div class="menu-footer">
+      <div class="menu-left-buttons">
+        <button id="profileBtn">Profile</button>
+        <button id="missionBtn">Mission</button>
       </div>
-      <hr />
-      <table>
-        <tr>
-          <td align="left">Task ID: X-S1-001</td>
-          <td align="right">Date issued: 8/12/25</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="footer-note">WE ARE EVERYWHERE - THE WATCHER</td>
-        </tr>
-      </table>
+      <button id="logoutMain">Log Out</button>
     </div>
   </div>
 </div>
 
-<!-- Main Screen -->
-<div id="mainScreen">
-  <div class="container">
-    <!-- Login -->
-    <div id="loginContainer">
-      <header>
-        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="EX-OS Logo" />
-        <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
-        <hr />
-      </header>
-      <form id="loginForm" autocomplete="off" novalidate>
-        <input type="text" id="codename" placeholder="Enter Codename" required autofocus />
-        <input type="text" id="idNumber" placeholder="Enter ID Number" required />
-        <button type="submit" disabled>LOG IN</button>
-      </form>
-      <div class="error" id="errorMsg"></div>
-      <hr />
-      <table>
-        <tr>
-          <td colspan="2" class="footer-note">WE ARE EVERYWHERE - THE WATCHER</td>
-        </tr>
-      </table>
+<!-- PROFILE -->
+<div id="profilePage" class="page">
+  <div class="main-box profile-box">
+    <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
+    <h2>PROFILE</h2>
+    <hr />
+    <p><strong>Full Name:</strong> <span id="profileFullName"></span></p>
+    <p><strong>Birth Date:</strong> <span id="profileBirthDate"></span></p>
+    <p><strong>Gender:</strong> <span id="profileGender"></span></p>
+    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    <p><strong>Contact:</strong> <span id="profileContact"></span></p>
+    <p><strong>Address:</strong> <span id="profileAddress"></span></p>
+    <hr />
+    <div class="menu-left-buttons">
+      <button id="refreshProfile">Refresh</button>
+      <button onclick="showPage('mainMenu')">Back</button>
     </div>
-    <!-- Mission -->
-    <div id="missionContainer">
-      <header>
-        <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="EX-OS Logo" />
-        <h1>MISSION STATUS</h1>
-        <div class="motto">EXECUTE IN SILENCE — STRIKE WITH LOGIC</div>
-      </header>
-      <section class="mission-info" id="missionInfo">
-        <p>Loading mission details...</p>
-      </section>
-      <div class="button-row">
-        <button id="refreshBtn" type="button">REFRESH</button>
-        <button id="logoutBtn" type="button">LOG OUT</button>
-      </div>
-      <div class="footer">
-        <div>Task ID: <span id="taskId">N/A</span></div>
-        <div>Date Issued: <span id="dateIssued">N/A</span></div>
-        <div>Operative: <span id="operativeName">Unknown</span></div>
-      </div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div id="missionPage" class="page">
+  <div class="main-box mission-box">
+    <img src="https://heuexe.github.io/status.EX-OS/logo.png" alt="Logo" />
+    <h2>MISSION STATUS</h2>
+    <hr />
+    <section class="mission-info" id="missionInfo"><p>Loading mission details...</p></section>
+    <hr />
+    <div class="menu-left-buttons">
+      <button id="refreshMission">Refresh</button>
+      <button onclick="showPage('mainMenu')">Back</button>
     </div>
   </div>
 </div>
 
 <script>
-  // Intro screen typing
-  const messages = [
-    "Initializing protocols...",
-    "Decrypting classified data...",
-    "Establishing secure connection...",
-    "Loading mission parameters...",
-    "Synchronizing with command center...",
-    "Preparing operative deployment...",
-    "Finalizing data stream...",
-    "Authenticate your identity"
-  ];
-  const typewriterEl = document.getElementById("typewriter");
-  const buttonsEl = document.getElementById("buttons");
-  let currentMessageIndex = 0;
-  function typeMessage(msg, callback) {
-    let i = 0;
-    typewriterEl.textContent = "";
-    typewriterEl.style.borderRight = "2px solid #bbb";
-    (function typeChar() {
-      if (i < msg.length) {
-        typewriterEl.textContent += msg.charAt(i++);
-        setTimeout(typeChar, 10);
-      } else {
-        setTimeout(callback, 1000);
-      }
-    })();
-  }
-  (function showNextMessage() {
-    if (currentMessageIndex < messages.length) {
-      typeMessage(messages[currentMessageIndex++], showNextMessage);
-    } else {
-      typewriterEl.style.borderRight = "none";
-      buttonsEl.style.display = "flex";
-    }
-  })();
-  // Countdown
-  const countdownTarget = new Date("August 12, 2025 18:40:00").getTime();
-  setInterval(() => {
-    const now = Date.now();
-    const timeLeft = countdownTarget - now;
-    if (timeLeft <= 0) {
-      document.body.innerHTML = `<div style="color:red; background-color:#000; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:var(--font-family);">
-        <h1 style="font-size: 36px;">FILE DESTROYED</h1>
-        <p style="color: #aaa; font-size: 14px;">This mission file is no longer accessible.</p>
-      </div>`;
-      document.title = "FILE DESTROYED";
-      return;
-    }
-    const d = Math.floor(timeLeft / 86400000);
-    const h = Math.floor((timeLeft % 86400000) / 3600000);
-    const m = Math.floor((timeLeft % 3600000) / 60000);
-    const s = Math.floor((timeLeft % 60000) / 1000);
-    document.getElementById("countdown").textContent = `Time Left: ${d}d ${h}h ${m}m ${s}s`;
-    document.title = `${d}d ${h}h ${m}m ${s}s`;
-  }, 1000);
-  // Proceed button
-  document.getElementById("proceedBtn").addEventListener("click", () => {
-    document.getElementById("introScreen").style.display = "none";
-    document.getElementById("mainScreen").style.display = "flex";
-  });
+// PAGE SWITCH
+function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
-  // Main screen logic
-  const loginContainer = document.getElementById('loginContainer');
-  const missionContainer = document.getElementById('missionContainer');
-  const loginForm = document.getElementById('loginForm');
-  const errorMsg = document.getElementById('errorMsg');
-  const submitBtn = loginForm.querySelector('button');
-  const missionInfoEl = document.getElementById('missionInfo');
-  const taskIdEl = document.getElementById('taskId');
-  const dateIssuedEl = document.getElementById('dateIssued');
-  const operativeNameEl = document.getElementById('operativeName');
-  const refreshBtn = document.getElementById('refreshBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-  let validUsers = null;
-  let currentUser = null;
-  
-  let missionStatusColors = {};
-
-async function loadMissionStatusColors() {
-  try {
-    const res = await fetch('https://heuexe.github.io/status.EX-OS/status.json');
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    const data = await res.json();
-    missionStatusColors = data.missionStatus || {};
-  } catch (error) {
-    console.error('Error loading mission status colors:', error);
-    missionStatusColors = {};
+  // Change title based on page
+  switch(id){
+    case 'introScreen':
+      document.title = "Main";
+      break;
+    case 'loginPage':
+      document.title = "Login";
+      break;
+    case 'mainMenu':
+      document.title = `Dashboard — (${codename})`;
+      break;
+    case 'profilePage':
+      document.title = "Profile";
+      break;
+    case 'missionPage':
+      document.title = "Mission Status";
+      break;
+    default:
+      document.title = "EX-OS";
   }
 }
 
-  fetch('https://heuexe.github.io/status.EX-OS/agents.json')
-    .then(res => res.json())
-    .then(data => { validUsers = data; submitBtn.disabled = false; })
-    .catch(() => { errorMsg.textContent = 'Error loading user data.'; });
-loginForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  errorMsg.textContent = '';
-  if (!validUsers) return errorMsg.textContent = 'User data not loaded yet.';
-  const codename = document.getElementById('codename').value.trim();
-  const idNumber = document.getElementById('idNumber').value.trim();
+// TYPEWRITER
+const messages=["Authenticate your identity"];
+const typewriterEl=document.getElementById("typewriter");
+let msgIndex=0;
+function typeMessage(msg, cb){ let i=0; typewriterEl.textContent=""; (function typeChar(){ if(i<msg.length){ typewriterEl.textContent+=msg.charAt(i++); setTimeout(typeChar,50); } else setTimeout(cb,700); })(); }
+(function showNextMessage(){ if(msgIndex<messages.length) typeMessage(messages[msgIndex++], showNextMessage); else document.getElementById("introButtons").style.display="block"; })();
 
-  if (validUsers[codename]?.Id === idNumber && validUsers[codename]?.Status === 'Active') {
-    currentUser = { codename, id: idNumber };
-    loginContainer.style.display = 'none';
-    missionContainer.style.display = 'flex';
+document.getElementById("proceedBtn").onclick=()=>showPage("loginPage");
 
-    await loadMissionStatusColors();  // Wait for colors to load
-    loadMissionData();                 // Then load mission info
-  } else {
-    errorMsg.textContent = 'Invalid Codename or ID.';
-  }
-});async function loadMissionData() {
-  missionInfoEl.innerHTML = '<p>Loading mission details...</p>';
-  taskIdEl.textContent = '...';
-  dateIssuedEl.textContent = '...';
-  operativeNameEl.textContent = currentUser.codename;
+// FETCH DATA
+let validUsers={}, validProfiles={}, validMissions={};
+async function fetchData(){
+  validUsers = await fetch('https://heuexe.github.io/status.EX-OS/agents.json',{cache:"no-store"}).then(r=>r.json());
+  validProfiles = await fetch('https://heuexe.github.io/status.EX-OS/profiles.json',{cache:"no-store"}).then(r=>r.json());
+  validMissions = await fetch('https://heuexe.github.io/status.EX-OS/mission.json',{cache:"no-store"}).then(r=>r.json());
+  document.getElementById("loginBtn").disabled=false;
+}
+fetchData();
+
+// LOGIN
+document.getElementById("loginBtn").onclick=()=>{
+  const codename=document.getElementById("codename").value.trim();
+  const idNumber=document.getElementById("idNumber").value.trim();
+  const user=validUsers[codename];
+  if(user && user.Id===idNumber && user.Status==="Active"){
+    document.getElementById("dashCodename").textContent=codename;
+    document.getElementById("dashRank").textContent=user.Rank||"N/A";
+    document.getElementById("dashField").textContent=user.Field||"N/A";
+    document.getElementById("dashStatus").textContent=user.Status||"N/A";
+    document.getElementById("dashDescription").textContent = user.Description||"N/A";
+    loadProfileData(codename);
+    loadMissionData(codename);
+    showPage("mainMenu");
+  } else { document.getElementById("errorMsg").textContent="Invalid Codename or ID."; }
+};
+
+// LOAD PROFILE
+function loadProfileData(codename){
+  if(!codename) return;
+  fetch('https://heuexe.github.io/status.EX-OS/profiles.json',{cache:"no-store"})
+    .then(r=>r.json())
+    .then(data=>{
+      const profile=data[codename];
+      if(!profile) return console.warn("Profile not found:",codename);
+      document.getElementById("profileFullName").textContent=profile["Full Name"]||'N/A';
+      document.getElementById("profileBirthDate").textContent=profile["Birth Date"]||'N/A';
+      document.getElementById("profileGender").textContent=profile["Gender"]||'N/A';
+      document.getElementById("profileEmail").textContent=profile["Email"]||'N/A';
+      document.getElementById("profileContact").textContent=profile["Contact"]||'N/A';
+      document.getElementById("profileAddress").textContent=profile["Address"]||'N/A';
+    }).catch(e=>console.error("Error loading profile:",e));
+}
+
+// LOAD MISSION
+async function loadMissionData(codename){
+  if(!codename) return;
 
   try {
-    // Add ?_=${Date.now()} to force a fresh request
-    const res = await fetch(`https://heuexe.github.io/status.EX-OS/mission.json?_=${Date.now()}`, {
-      cache: "no-store"
-    });
+    // Always fetch live data
+    const [missions, statusColors] = await Promise.all([
+      fetch('https://heuexe.github.io/status.EX-OS/mission.json',{cache:"no-store"}).then(r=>r.json()),
+      fetch('https://heuexe.github.io/status.EX-OS/status.json',{cache:"no-store"}).then(r=>r.json())
+    ]);
 
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    const missionsData = await res.json();
+    const mission = missions[codename];
+    const colorMap = statusColors.missionStatus || {};
 
-    const mission = missionsData[currentUser.codename];
-    if (!mission) {
-      missionInfoEl.innerHTML = `<p>No mission found for operative "${currentUser.codename}".</p>`;
-      taskIdEl.textContent = 'N/A';
-      dateIssuedEl.textContent = 'N/A';
+    if(!mission){
+      document.getElementById("missionInfo").innerHTML="<p>No mission found.</p>";
       return;
     }
 
-    const missionStatus = mission.Status?.trim() || 'Unknown';
-    const statusColor = missionStatusColors[missionStatus] || '#fff';
+    const statusColor = colorMap[mission.Status] || "#ffffff";
 
-    missionInfoEl.innerHTML = `
-      <p><strong>Mission Type:</strong> ${Array.isArray(mission.Mission) ? mission.Mission.join(', ') : mission.Mission}</p>
-      <p><strong>Status:</strong> <span style="color: ${statusColor}; font-weight: bold;">${missionStatus}</span></p>
-      <p><strong>Description:</strong></p>
-      <p>${mission.Description}</p>
+    document.getElementById("missionInfo").innerHTML=`
+      <p><strong>Mission Type:</strong> ${mission.Mission}</p>
+      <p><strong>Task ID:</strong> ${mission.TaskId || 'N/A'}</p>
+      <p><strong>Date Issued:</strong> ${mission.DateIssued || 'N/A'}</p>
+      <p><strong>Status:</strong> <span style="color:${statusColor}; font-weight:bold;">${mission.Status}</span></p>
+      <p><strong>Description:</strong> ${mission.Description}</p>
     `;
 
-    taskIdEl.textContent = mission.TaskId || 'N/A';
-    dateIssuedEl.textContent = mission.DateIssued || 'N/A';
-
-  } catch (error) {
-    console.error('Error loading mission data:', error);
-    missionInfoEl.innerHTML = '<p>Error loading mission data.</p>';
-    taskIdEl.textContent = 'N/A';
-    dateIssuedEl.textContent = 'N/A';
+  } catch(e) {
+    console.error("Error loading mission:", e);
+    document.getElementById("missionInfo").innerHTML="<p>Error loading mission data.</p>";
   }
 }
 
+// Refresh button
+document.getElementById("refreshMission").onclick = () => {
+  const codename = document.getElementById("dashCodename").textContent;
+  if (!codename) return;
+  loadMissionData(codename);
+};
+
+// BUTTONS
+document.getElementById("profileBtn").onclick=()=>{ const codename=document.getElementById("dashCodename").textContent; loadProfileData(codename); showPage("profilePage"); };
+document.getElementById("missionBtn").onclick=()=>{ const codename=document.getElementById("dashCodename").textContent; loadMissionData(codename); showPage("missionPage"); };
+document.getElementById("refreshProfile").onclick=()=>{ const codename=document.getElementById("dashCodename").textContent; loadProfileData(codename); };
+document.getElementById("refreshMission").onclick=()=>{ const codename=document.getElementById("dashCodename").textContent; loadMissionData(codename); };
+
+// LOGOUT
+document.getElementById("logoutMain").onclick = () => {
+  // Clear all user-specific info
+  document.getElementById("codename").value = "";
+  document.getElementById("idNumber").value = "";
+  document.getElementById("errorMsg").textContent = "";
   
-    // Refresh cooldown
-    const refreshCooldown = 10; // seconds
-    let refreshTimer = null;
+  document.getElementById("dashCodename").textContent = "";
+  document.getElementById("dashRank").textContent = "";
+  document.getElementById("dashField").textContent = "";
+  document.getElementById("dashStatus").textContent = "";
+  
+  document.getElementById("profileFullName").textContent = "";
+  document.getElementById("profileBirthDate").textContent = "";
+  document.getElementById("profileGender").textContent = "";
+  document.getElementById("profileEmail").textContent = "";
+  document.getElementById("profileContact").textContent = "";
+  document.getElementById("profileAddress").textContent = "";
+  
+  document.getElementById("missionInfo").innerHTML = "<p>Loading mission details...</p>";
 
-    refreshBtn.addEventListener('click', () => {
-    if (refreshTimer) return; // prevent spam clicks
+  // Show login page
+  showPage("loginPage");
+};
 
-    refreshBtn.disabled = true;
-    let timeLeft = refreshCooldown;
+// Page Title
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-    // Show countdown in mission info area only
-    missionInfoEl.innerHTML = `<p>Refreshing in ${timeLeft}s...</p>`;
+  // Get current codename from dashboard span
+  const codename = document.getElementById("dashCodename")?.textContent || "";
 
-      refreshTimer = setInterval(() => {
-        timeLeft--;
-        if (timeLeft > 0) {
-          missionInfoEl.innerHTML = `<p>Refreshing in ${timeLeft}s...</p>`;
-        } else {
-          clearInterval(refreshTimer);
-          refreshTimer = null;
-
-          missionInfoEl.innerHTML = '<p>Loading mission details...</p>';
-          loadMissionData().finally(() => {
-            refreshBtn.disabled = false;
-        });
-      }
-    }, 1000);
-  });
-
-  // Logout
-  logoutBtn.addEventListener('click', () => {
-    if (refreshTimer) {
-      clearInterval(refreshTimer);
-      refreshTimer = null;
-      refreshBtn.textContent = 'REFRESH';
-      refreshBtn.disabled = false;
-    }
-    currentUser = null;
-    missionInfoEl.innerHTML = '<p>Loading mission details...</p>';
-    taskIdEl.textContent = 'N/A';
-    dateIssuedEl.textContent = 'N/A';
-    operativeNameEl.textContent = 'Unknown';
-    missionContainer.style.display = 'none';
-    loginContainer.style.display = 'block';
-    loginForm.reset();
-    errorMsg.textContent = '';
-    submitBtn.disabled = false;
-    document.getElementById('codename').focus();
-  });
+  // Change title based on page
+  switch(id){
+    case 'introScreen':
+      document.title = "Home";
+      break;
+    case 'loginPage':
+      document.title = "Login";
+      break;
+    case 'mainMenu':
+      document.title = codename ? `Dashboard — ${codename}` : "Dashboard";
+      break;
+    case 'profilePage':
+      document.title = codename ? `Profile — ${codename}` : "Profile";
+      break;
+    case 'missionPage':
+      document.title = codename ? `Mission Status — ${codename}` : "Mission Status";
+      break;
+    default:
+      document.title = "XX-XX-XX";
+  }
+}
 </script>
 </body>
 </html>
