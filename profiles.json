@@ -6,7 +6,7 @@
    "Email": "REDACTED@gmail.com",
    "Contact": "REDACTED",
    "Address": "REDACTED"
-},
+ },
 
   "Bravo-X-S1": {
    "Full Name": "Miguel S. Rubio",
@@ -15,7 +15,7 @@
    "Email": "miguel.rubio1125@gmail.com",
    "Contact": "09929917154",
    "Address": "BLK 25, SITIO RUBY, FAIRVIEW, QUEZON CITY"
-},
+ },
 
   "Null": {
    "Full Name": "Vincent Encienzo",
@@ -24,4 +24,5 @@
    "Email": "vincent.encienzo@gmail.com",
    "Contact": "Unknown",
    "Address": "Unknown"
-},
+ },
+}
