@@ -11,13 +11,13 @@
     "Rank": "Recruit",
     "Field": "Operations",
     "Status": "Active",
-    "Description": "",
+    "Description": ""
   },
   "Null": {
     "Id": "X-S1-002",
     "Rank": "Recruit",
     "Field": "Security",
     "Status": "Active",
-    "Description": "",
+    "Description": ""
   }
 }
